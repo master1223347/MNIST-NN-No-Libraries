@@ -60,3 +60,5 @@ def train(images, labels, epochs=5, lr=0.01):
             nn.sgd_update_bias(b1, grad_b1, len(b1), lr)
 
         print("Epoch", epoch, "Loss", total_loss / len(images)) #prints avg loss
+        
+    return w1, b1, w2, b2
