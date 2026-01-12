@@ -1,6 +1,6 @@
 '''
-these are python standard imports, technically the project can be done without these but the user will need to manually decompress
-files, these are here purely for reproducibility
+these are python standard imports, technically the project can be done without these but its just a lot more messy,
+these are here purely for reproducibility
 '''
 import struct
 
