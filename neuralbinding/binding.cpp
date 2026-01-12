@@ -1,4 +1,4 @@
-#include <pybind11/pybind11.h>
+#include <pybind11/pybind11.h> //ONLY LIBRARY [I can do it manually but its a pain and doesn't contribute anything]
 
 #include "dense.h"
 #include "relu.h"
@@ -7,6 +7,7 @@
 
 namespace py = pybind11;
 
+//pybind stuff
 PYBIND11_MODULE(neuralbinding, m) {
     m.def("dense_forward", &dense_forward);
     m.def("dense_backward", &dense_backward);
