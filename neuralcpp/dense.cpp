@@ -54,6 +54,7 @@ void dense_backward(
     for (int i = 0; i < out_dim; i++) {
         grad_b[i] = grad_y[i]; //copying upstream gradient directly [∂L/∂b_i = grad_y[i], bias gradient = upstream gradient]
     }
+}
 
 //done with FWD pass and BWD pass!!
 
