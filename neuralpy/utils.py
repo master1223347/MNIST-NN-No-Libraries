@@ -1,3 +1,5 @@
+import random #used only for initialization 
+
 # One-hot encoding
 def one_hot(label, num_classes):
     vec = [0.0] * num_classes
@@ -11,3 +13,30 @@ def normalize_image(image):
         out.append(p / 255.0)
     return out
 
+#weight initialization 
+def init_weights(in_dim, out_dim):
+    weights = []
+    scale = (1.0 / in_dim) ** 0.5  # simple variance control
+
+    for i in range(out_dim):
+        for j in range(in_dim):
+            weights.append(random.uniform(-scale, scale))
+
+    return weights
+
+# bias initialization
+def init_bias(out_dim):
+    b = []
+    for i in range(out_dim):
+        b.append(0.0)
+    return b
+
+# batch creator
+def make_batches(data, labels, batch_size):
+    batches = []
+    for i in range(0, len(data), batch_size):
+        batches.append((
+            data[i:i + batch_size],
+            labels[i:i + batch_size]
+        ))
+    return batches
