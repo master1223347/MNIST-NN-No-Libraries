@@ -3,7 +3,8 @@
         "neuralbinding",
         "neuralcpp",
         "relu",
-        "shuf"
+        "shuf",
+        "updt"
     ],
     "python-envs.pythonProjects": []
 }
