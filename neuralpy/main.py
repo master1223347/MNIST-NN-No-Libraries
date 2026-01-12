@@ -5,10 +5,10 @@ import neuralbinding as nn
 
 def main():
     # Paths to MNIST files
-    train_images_path = "train-images-idx3-ubyte"
-    train_labels_path = "train-labels-idx1-ubyte"
-    test_images_path = "t10k-images-idx3-ubyte"
-    test_labels_path = "t10k-labels-idx1-ubyte"
+    train_images_path = "data/train-images.idx3-ubyte"
+    train_labels_path = "data/train-labels.idx1-ubyte"
+    test_images_path = "data/t10k-images.idx3-ubyte"
+    test_labels_path = "data/t10k-labels.idx1-ubyte"
 
     # Load MNIST data
     train_images, train_labels = load_mnist(train_images_path, train_labels_path)
