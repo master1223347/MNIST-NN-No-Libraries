@@ -1,5 +1,5 @@
 import neuralbinding as nn
-from utils import one_hot, normalize_image
+from utils import one_hot, normalize_image, init_weights, init_bias
 
 # training function
 def train(images, labels, epochs=5, lr=0.01):
@@ -9,12 +9,12 @@ def train(images, labels, epochs=5, lr=0.01):
     out_dim = 10
 
     #param initialization L1
-    w1 = [0.01] * (hidden_dim * in_dim)
-    b1 = [0.0] * hidden_dim
+    w1 = init_weights(in_dim, hidden_dim)
+    b1 = init_bias(hidden_dim)
 
     #param initialization L2
-    w2 = [0.01] * (out_dim * hidden_dim)
-    b2 = [0.0] * out_dim
+    w2 = init_weights(hidden_dim, out_dim)
+    b2 = init_bias(out_dim)
 
     #loop over the epochs
     for epoch in range(epochs):
