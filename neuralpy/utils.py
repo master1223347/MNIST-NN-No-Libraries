@@ -31,12 +31,33 @@ def init_bias(out_dim):
         b.append(0.0)
     return b
 
-# batch creator
-def make_batches(data, labels, batch_size):
-    batches = []
-    for i in range(0, len(data), batch_size):
-        batches.append((
-            data[i:i + batch_size],
-            labels[i:i + batch_size]
-        ))
-    return batches
+#well, shuffles data
+def shuffle_data(images, labels):
+    if len(images) != len(labels):
+        raise ValueError("Image and label count mismatch")
+
+    indices = list(range(len(images)))
+    random.shuffle(indices)
+
+    shuffled_images = [images[i] for i in indices]
+    shuffled_labels = [labels[i] for i in indices]
+
+    return shuffled_images, shuffled_labels
+
+# calculates accuracy
+def accuracy(predictions, labels):
+    correct = 0
+
+    for y_pred, y_true in zip(predictions, labels):
+        max_idx = 0
+        max_val = y_pred[0]
+
+        for i in range(1, len(y_pred)):
+            if y_pred[i] > max_val:
+                max_val = y_pred[i]
+                max_idx = i
+
+        if max_idx == y_true:
+            correct += 1
+
+    return correct / len(labels)
