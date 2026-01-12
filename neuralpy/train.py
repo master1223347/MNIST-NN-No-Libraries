@@ -1,5 +1,5 @@
 import neuralbinding as nn
-from utils import one_hot, normalize_image, init_weights, init_bias
+from utils import one_hot, init_weights, init_bias
 
 # training function
 def train(images, labels, epochs=5, lr=0.01):
@@ -22,7 +22,6 @@ def train(images, labels, epochs=5, lr=0.01):
         #updt weights after every img
         for x, y in zip(images, labels):
             #preprocessing
-            x = normalize_image(x)
             t = one_hot(y, out_dim)
 
             #forward pass
