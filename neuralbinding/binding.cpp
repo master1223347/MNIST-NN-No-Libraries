@@ -15,8 +15,8 @@ PYBIND11_MODULE(neuralbinding, m) {
     m.def("relu_forward", &relu_forward);
     m.def("relu_backward", &relu_backward);
 
-    m.def("mse_forward", &mse_forward);
-    m.def("mse_backward", &mse_backward);
+    m.def("softmax_ce_forward", &softmax_ce_forward);
+    m.def("softmax_ce_backward", &softmax_ce_backward);
 
     m.def("sgd_update", &sgd_update);
     m.def("sgd_update_bias", &sgd_update_bias);
