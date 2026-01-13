@@ -1,9 +1,13 @@
 {
     "cSpell.words": [
+        "exponentials",
+        "logits",
+        "MNIST",
         "neuralbinding",
         "neuralcpp",
         "relu",
         "shuf",
+        "syfm",
         "updt"
     ],
     "python-envs.pythonProjects": []

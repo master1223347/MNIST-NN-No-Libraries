@@ -1,29 +1,64 @@
 #include "loss.h"
+#include "math_utils.h"
 
-//Mean Squared Error forward pass
-double mse_forward(
-    const double* y,
-    const double* t,
+// Forward pass: softmax + cross entropy
+double softmax_ce_forward(
+    const double* logits,
+    const double* target,
     int size
 ) {
-    double loss = 0.0; //store error
+    double softmax_out[10]; // MNIST output size
+    double sum_exp = 0.0;
 
-    for (int i = 0; i < size; i++) { //looping over all output neurons
-        double diff = y[i] - t[i]; //calculates diff between model pred and actual answer
-        loss += diff * diff; //squares diffs
+    // 1. compute exponentials with clamp
+    for (int i = 0; i < size; i++) {
+        double z = logits[i];
+        if (z > 5.0) z = 5.0;      // clamp high
+        if (z < -5.0) z = -5.0;    // clamp low
+        softmax_out[i] = my_exp(z);
+        sum_exp += softmax_out[i];
     }
 
-    return loss / size; //avg error
+    // 2. normalize softmax
+    for (int i = 0; i < size; i++) {
+        softmax_out[i] /= sum_exp;
+    }
+
+    // 3. compute cross entropy loss
+    double loss = 0.0;
+    for (int i = 0; i < size; i++) {
+        loss -= target[i] * my_log(softmax_out[i]);
+    }
+
+    return loss;
 }
 
-//Mean Squared Error backward pass
-void mse_backward(
-    const double* y,
-    const double* t,
-    double* grad_y,
+// Backward pass: gradient w.r.t logits
+void softmax_ce_backward(
+    const double* logits,
+    const double* target,
+    double* grad_logits,
     int size
 ) {
-    for (int i = 0; i < size; i++) { //loops over all output neurons
-        grad_y[i] = 2.0 * (y[i] - t[i]) / size; //loss gradient
+    double softmax_out[10];
+    double sum_exp = 0.0;
+
+    // 1. compute exponentials with clamp
+    for (int i = 0; i < size; i++) {
+        double z = logits[i];
+        if (z > 5.0) z = 5.0;
+        if (z < -5.0) z = -5.0;
+        softmax_out[i] = my_exp(z);
+        sum_exp += softmax_out[i];
+    }
+
+    // 2. normalize softmax
+    for (int i = 0; i < size; i++) {
+        softmax_out[i] /= sum_exp;
+    }
+
+    // 3. compute gradient
+    for (int i = 0; i < size; i++) {
+        grad_logits[i] = softmax_out[i] - target[i];
     }
 }

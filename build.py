@@ -1,7 +1,9 @@
 '''
 !!!IMPORTANT: RUN THIS BEFORE USING!!! THIS LINKS CPP WITH PYTHON
-ALSO PIP INSTALL PYBIND11!!!
+ALSO PIP INSTALL PYBIND11!!! ("b-b-but you said no libraries" syfm)
 '''
+#btw THESE libraries are here so you don't have to manually bind py and cpp, 
+#this file isn't even needed for the project it can be run from terminal
 import subprocess
 import sysconfig
 
