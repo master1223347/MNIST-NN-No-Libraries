@@ -3,11 +3,11 @@
 
 // Forward pass: softmax + cross entropy
 double softmax_ce_forward(
-    const double* logits,
-    const double* target,
+    const std::vector<double>& logits,
+    const std::vector<double>& target,
     int size
 ) {
-    double softmax_out[10]; // MNIST output size
+    std::vector<double> softmax_out(10); // MNIST output size
     double sum_exp = 0.0;
 
     // 1. compute exponentials with clamp
@@ -35,12 +35,12 @@ double softmax_ce_forward(
 
 // Backward pass: gradient w.r.t logits
 void softmax_ce_backward(
-    const double* logits,
-    const double* target,
-    double* grad_logits,
+    const std::vector<double>& logits,
+    const std::vector<double>& target,
+    std::vector<double>& grad_logits,
     int size
 ) {
-    double softmax_out[10];
+    std::vector<double> softmax_out(10);
     double sum_exp = 0.0;
 
     // 1. compute exponentials with clamp

@@ -1,9 +1,8 @@
 #include "optimizer.h"
 
-
 void sgd_update(
-    double* w,
-    const double* grad_w,
+    std::vector<double>& w,
+    const std::vector<double>& grad_w,
     int size,
     double lr
 ) {
@@ -13,8 +12,8 @@ void sgd_update(
 }
 
 void sgd_update_bias(
-    double* b,
-    const double* grad_b,
+    std::vector<double>& b,
+    const std::vector<double>& grad_b,
     int size,
     double lr
 ) {

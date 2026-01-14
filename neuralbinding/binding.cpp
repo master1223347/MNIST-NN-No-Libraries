@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h> //ONLY LIBRARY [I can do it manually but its a pain and doesn't contribute anything]
+#include <pybind11/stl.h>
 
 #include "dense.h"
 #include "relu.h"

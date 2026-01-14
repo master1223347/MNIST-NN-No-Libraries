@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>  // required for std::vector
 
-void relu_forward(double* y, int size);
-void relu_backward(const double* y, double* grad_y, int size);
+void relu_forward(std::vector<double>& y, int size);
+void relu_backward(const std::vector<double>& y, std::vector<double>& grad_y, int size);

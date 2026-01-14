@@ -2,10 +2,10 @@
 
 //Forward pass
 void dense_forward(
-    const double* x,
-    const double* w,
-    const double* b,
-    double* y,
+    const std::vector<double>& x,
+    const std::vector<double>& w,
+    const std::vector<double>& b,
+    std::vector<double>& y,
     int in_dim,
     int out_dim
 ) { //forward pass
@@ -21,12 +21,12 @@ void dense_forward(
 
 // Backward pass
 void dense_backward(
-    const double* x,
-    const double* w,
-    const double* grad_y,
-    double* grad_x,
-    double* grad_w,
-    double* grad_b,
+    const std::vector<double>& x,
+    const std::vector<double>& w,
+    const std::vector<double>& grad_y,
+    std::vector<double>& grad_x,
+    std::vector<double>& grad_w,
+    std::vector<double>& grad_b,
     int in_dim,
     int out_dim
 ) { 
@@ -57,8 +57,3 @@ void dense_backward(
 }
 
 //done with FWD pass and BWD pass!!
-
-
-
-
-
