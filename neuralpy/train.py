@@ -27,18 +27,18 @@ def train(images, labels, epochs=5, lr=0.01):
             #forward pass
             z1 = [0.0] * hidden_dim
             nn.dense_forward(x, w1, b1, z1, in_dim, hidden_dim)
-            nn.relu_forward(z1, hidden_dim)
+            nn.relu_forward(z1, hidden_dim)  # keep first layer as ReLU
 
             y_pred = [0.0] * out_dim
             nn.dense_forward(z1, w2, b2, y_pred, hidden_dim, out_dim)
 
-            #loss function
-            loss = nn.mse_forward(y_pred, t, out_dim)
+            #loss function: softmax + cross entropy
+            loss = nn.softmax_ce_forward(y_pred, t, out_dim)
             total_loss += loss
 
             #backward pass
             grad_y = [0.0] * out_dim
-            nn.mse_backward(y_pred, t, grad_y, out_dim)
+            nn.softmax_ce_backward(y_pred, t, grad_y, out_dim)
 
             grad_z1 = [0.0] * hidden_dim
             grad_w2 = [0.0] * (out_dim * hidden_dim)
