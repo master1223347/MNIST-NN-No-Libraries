@@ -9,7 +9,7 @@ def one_hot(label, num_classes):
 #weight initialization 
 def init_weights(in_dim, out_dim):
     weights = []
-    scale = (1.0 / in_dim) ** 0.5  # simple variance control
+    scale = (2.0 / in_dim) ** 0.5  # simple variance control - He initialization
 
     for i in range(out_dim):
         for j in range(in_dim):
