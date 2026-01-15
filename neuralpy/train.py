@@ -19,6 +19,9 @@ def train(images, labels, epochs=5, lr=0.01):
     #loop over the epochs
     for epoch in range(epochs):
         total_loss = 0.0
+        correct = 0 
+        total = 0 
+
         #updt weights after every img
         for x, y in zip(images, labels):
             #preprocessing
@@ -31,6 +34,12 @@ def train(images, labels, epochs=5, lr=0.01):
 
             y_pred = [0.0] * out_dim
             nn.dense_forward(z1, w2, b2, y_pred, hidden_dim, out_dim)
+
+            # accuracy calculation
+            pred_label = max(range(out_dim), key=lambda i: y_pred[i]) 
+            if pred_label == y:
+                correct += 1
+            total += 1
 
             #loss function: softmax + cross entropy
             loss = nn.softmax_ce_forward(y_pred, t, out_dim)
@@ -59,4 +68,7 @@ def train(images, labels, epochs=5, lr=0.01):
             nn.sgd_update(w1, grad_w1, len(w1), lr)
             nn.sgd_update_bias(b1, grad_b1, len(b1), lr)
         
+        accuracy = correct / total
+        print(f"Epoch {epoch + 1}: loss = {total_loss / total:.4f}, accuracy = {accuracy:.4f}")
+
     return w1, b1, w2, b2
