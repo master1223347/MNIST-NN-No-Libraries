@@ -13,7 +13,8 @@ SRC_FILES = [
     "neuralcpp/dense.cpp",
     "neuralcpp/relu.cpp",
     "neuralcpp/loss.cpp",
-    "neuralcpp/optimizer.cpp"
+    "neuralcpp/optimizer.cpp",
+    "neuralcpp/math_utils.cpp"
 ]
 
 INCLUDE_FLAGS = "-I neuralcpp $(python3 -m pybind11 --includes)"

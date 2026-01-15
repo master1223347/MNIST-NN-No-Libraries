@@ -5,6 +5,7 @@
 #include "relu.h"
 #include "loss.h"
 #include "optimizer.h"
+#include "math_utils.h"
 
 namespace py = pybind11;
 
