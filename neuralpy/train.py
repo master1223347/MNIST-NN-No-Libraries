@@ -30,6 +30,7 @@ def train(images, labels, epochs=5, lr=0.01):
             #forward pass
             z1 = [0.0] * hidden_dim
             nn.dense_forward(x, w1, b1, z1, in_dim, hidden_dim)
+            z1_pre = z1.copy()  # CHANGE 1: save pre-activation values for backward pass
             nn.relu_forward(z1, hidden_dim)  # keep first layer as ReLU
 
             y_pred = [0.0] * out_dim
@@ -54,7 +55,7 @@ def train(images, labels, epochs=5, lr=0.01):
             grad_b2 = [0.0] * out_dim
             nn.dense_backward(z1, w2, grad_y, grad_z1, grad_w2, grad_b2, hidden_dim, out_dim)
 
-            nn.relu_backward(z1, grad_z1, hidden_dim)
+            nn.relu_backward(z1_pre, grad_z1, hidden_dim)  # CHANGE 2: use pre-activation values
 
             grad_x = [0.0] * in_dim
             grad_w1 = [0.0] * (hidden_dim * in_dim)
