@@ -10,11 +10,17 @@ double softmax_ce_forward(
     std::vector<double> softmax_out(10); // MNIST output size
     double sum_exp = 0.0;
 
+    // compute max for numeric stability (softmax shift)
+    double max_logit = logits[0];
+    for (int i = 1; i < size; i++) {
+        if (logits[i] > max_logit) max_logit = logits[i];
+    }
+
     // 1. compute exponentials with clamp
     for (int i = 0; i < size; i++) {
         double z = logits[i];
-        if (z > 5.0) z = 5.0;      // clamp high
-        if (z < -5.0) z = -5.0;    // clamp low
+        // apply softmax shift instead of clamping
+        z = z - max_logit;
         softmax_out[i] = my_exp(z);
         sum_exp += softmax_out[i];
     }
@@ -43,11 +49,17 @@ void softmax_ce_backward(
     std::vector<double> softmax_out(10);
     double sum_exp = 0.0;
 
+    // compute max for numeric stability (softmax shift)
+    double max_logit = logits[0];
+    for (int i = 1; i < size; i++) {
+        if (logits[i] > max_logit) max_logit = logits[i];
+    }
+
     // 1. compute exponentials with clamp
     for (int i = 0; i < size; i++) {
         double z = logits[i];
-        if (z > 5.0) z = 5.0;
-        if (z < -5.0) z = -5.0;
+        // apply softmax shift instead of clamping
+        z = z - max_logit;
         softmax_out[i] = my_exp(z);
         sum_exp += softmax_out[i];
     }
