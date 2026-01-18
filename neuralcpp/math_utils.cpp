@@ -1,21 +1,28 @@
 #include "math_utils.h"
 
-// Exponential approximation
+// Exponential approximation without cmath
 double my_exp(double x) {
-    // clamp to avoid blow up in Taylor series
-    if (x > 10.0) x = 10.0;
-    if (x < -10.0) x = -10.0;
+    // Clamp input to prevent overflow
+    if (x > 88.0) x = 88.0;   // e^88 ~ max for float/double in NN
+    if (x < -88.0) x = -88.0;
 
-    double result = 1.0;
-    double term = 1.0;
+    // Range reduction: find n such that x = n*ln2 + f, -0.5*ln2 <= f <= 0.5*ln2
+    const double ln2 = 0.69314718056;
+    double n = (int)(x / ln2 + (x >= 0 ? 0.5 : -0.5)); // nearest integer
+    double f = x - n * ln2;
 
-    // Truncated Taylor series
-    for (int i = 1; i <= 10; i++) {
-        term *= x / i;
-        result += term;
+    // Polynomial approximation for exp(f) using Horner's method
+    double expf = 1.0 + f*(1.0 + f*(0.5 + f*(0.1666666667 + f*(0.0416666667 + f*0.0083333333))));
+
+    // Compute 2^n by repeated multiplication (no ldexp)
+    double pow2 = 1.0;
+    if (n > 0) {
+        for (int i = 0; i < (int)n; i++) pow2 *= 2.0;
+    } else if (n < 0) {
+        for (int i = 0; i < -(int)n; i++) pow2 *= 0.5;
     }
 
-    return result;
+    return expf * pow2;
 }
 
 // Natural logarithm approximation
