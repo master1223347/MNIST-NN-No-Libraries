@@ -5,6 +5,8 @@ ALSO PIP INSTALL PYBIND11!!! ("b-b-but you said no libraries" syfm)
 #btw THESE libraries are here so you don't have to manually bind py and cpp, 
 #this file isn't even needed for the project it can be run from terminal
 import subprocess
+import shlex
+import sys
 import sysconfig
 
 EXT_NAME = "neuralbinding"
@@ -17,10 +19,18 @@ SRC_FILES = [
     "neuralcpp/math_utils.cpp"
 ]
 
-INCLUDE_FLAGS = "-I neuralcpp $(python3 -m pybind11 --includes)"
+pybind_includes = subprocess.check_output(
+    [sys.executable, "-m", "pybind11", "--includes"],
+    text=True
+).strip()
+INCLUDE_FLAGS = f"-I neuralcpp {pybind_includes}"
 OUTPUT_FILE = f"neuralbinding/{EXT_NAME}{sysconfig.get_config_var('EXT_SUFFIX')}"
 
-cmd = f"c++ -O3 -Wall -shared -std=c++17 -fPIC {INCLUDE_FLAGS} {' '.join(SRC_FILES)} -o {OUTPUT_FILE} -undefined dynamic_lookup"
+cmd = (
+    "c++ -O3 -Wall -shared -std=c++17 -fPIC "
+    f"{INCLUDE_FLAGS} {' '.join(shlex.quote(src) for src in SRC_FILES)} "
+    f"-o {shlex.quote(OUTPUT_FILE)} -undefined dynamic_lookup"
+)
 
 print("Running build command:")
 print(cmd)
