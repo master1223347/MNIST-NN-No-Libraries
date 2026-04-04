@@ -145,7 +145,7 @@ Expected output includes per-epoch loss/accuracy and final test accuracy.
 2. Drag/copy the generated `.so` file into `neuralpy/`
 3. Run `main.py`
 
-## Example Results
+## Results
 
 ```text
 Epoch 1: loss = 0.2244, accuracy = 0.9334
